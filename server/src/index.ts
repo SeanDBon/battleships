@@ -3,11 +3,11 @@ const app = express()
 const cors = require("cors")
 const http = require("http").Server(app)
 const { v4: uuidv4 } = require("uuid")
-import {User, Room, initialGameState} from "@/types"
+import {User, Room, ShipTile, HitTile, initialGameState} from "./types"
 const PORT = 4000
 const socketIO = require("socket.io")(http, {
     cors: {
-        origin: "http://192.168.1.91:3000"
+        origin: "http://localhost:3000"
     }
 })
 app.use(cors())
@@ -20,13 +20,16 @@ const handleJoinRoom = (socket, joiningUser) => {
         if (joiningUser.isSpectating) {
             throw new Error("Cannot create a new room as a spectator")
         }
-        room = createNewRoom(joiningUser)
+        room = createNewRoom(socket, joiningUser)
     }
 
     let user = room.users.find(user => user.socket.id == socket.id)
     if (!user) {
         if (!joiningUser.isSpectating && getPlayersFromRoom(room).length > 1) {
             throw new Error("Cannot join room as a player, already at two players")
+        } else if (!joiningUser.isSpectating && getPlayersFromRoom(room).length == 1) {
+            room.playerTwo = socket.id
+            rooms[joiningUser.room] = room
         }
         user = createNewUser(socket, joiningUser)
         addUserToRoom(socket, user, room)
@@ -43,9 +46,11 @@ const createNewUser = (socket, joiningUser) => {
     return newUser
 }
 
-const createNewRoom = (user) => {
+const createNewRoom = (socket, user) => {
     let newRoom: Room = {
         id: uuidv4(),
+        playerOne: socket.id,
+        playerTwo: null,
         users: [],
         gameState: initialGameState
     }
@@ -55,9 +60,8 @@ const createNewRoom = (user) => {
 
 const addUserToRoom = (socket, user, room) => {
     room.users.push(user)
-    socket.join(room.id, () => {
-        socket.roomId = room.id
-    })
+    socket.roomId = room.id
+    socket.join(room.id)
 }
 
 const getPlayersFromRoom = (room: Room) => {
@@ -79,6 +83,63 @@ const handleLeaveRoom = (socket, leavingUser) => {
     }
 }
 
+const updateGame = (socket, data) => {
+    let room = null
+    for (let name in rooms) {
+        if (rooms[name].id == socket.roomId) {
+            room = rooms[name]
+         }
+    }
+    if (room == null) {
+        throw new Error("Room not found with id: " + socket.roomId)
+    }
+    let user = null
+    user = room.users.find( user => user.socket.id == socket.id)
+    if (user == null) {
+        throw new Error("User not found with id: " + socket.id)
+    }
+
+    updateBoards(socket, room, user, data)
+    return room
+}
+
+const updateBoards = (socket, room, user, data) => {
+    let hitBoard = null
+    let shipBoard = null
+    if (room.playerOne == socket.id) {
+        hitBoard = room.gameState.playOneHitBoard
+        shipBoard = room.gameState.playTwoShipBoard
+    } else if (room.playerTwo == socket.id) {
+        hitBoard = room.gameState.playTwoHitBoard
+        shipBoard = room.gameState.playOneShipBoard
+    }
+
+    if (!hitBoard || !shipBoard) {
+        throw new Error("Something went drastically wrong :/")
+    }
+
+    if (shipBoard[data.lat][data.long] == ShipTile.FULL_PRISTINE) {
+        shipBoard[data.lat][data.long] = ShipTile.FULL_HIT
+        hitBoard[data.lat][data.long] = HitTile.HIT
+    } else if (shipBoard[data.lat][data.long] == ShipTile.FULL_HIT) {
+        // what, your an idiot, who does that.
+    } else {
+        shipBoard[data.lat][data.long] = ShipTile.EMPTY_HIT
+        hitBoard[data.lat][data.long] = HitTile.MISS
+    }
+
+
+    if (room.playerOne == socket.id) {
+        room.gameState.playOneHitBoard = hitBoard
+        room.gameState.playTwoShipBoard = shipBoard
+    } else if (room.playerTwo == socket.id) {
+        room.gameState.playTwoHitBoard = hitBoard
+        room.gameState.playOneShipBoard = shipBoard
+    }
+
+    rooms[room.name] = room
+}
+
 socketIO.on("connection", (socket) => {
     socket.on("joinRoom", user => {
         try {
@@ -86,7 +147,7 @@ socketIO.on("connection", (socket) => {
             let players = getPlayersFromRoom(room)
             let spectators = getSpectatorsFromRoom(room)
             socketIO.in(room.id).emit("roomUserList", { players, spectators })
-            socketIO.in(room.id).emit("gameState", { gameState: room.gameState })
+            socketIO.in(room.id).emit("gameStateChange", { gameState: room.gameState })
         } catch (e) {
             console.log(e.message)
             socket.emit("errorJoining", { message: e.message })
@@ -95,6 +156,12 @@ socketIO.on("connection", (socket) => {
 
     socket.on("leaveRoom", user => {
         handleLeaveRoom(socket, user)
+    })
+
+    socket.on("updateGame", data => {
+        let room = updateGame(socket, data)
+        socketIO.in(room.id).emit("playerAttack", { lat: data.lat, long: data.long, attack: data.attack})
+        socketIO.in(room.id).emit("gameStateChange", { gameState: room.gameState })
     })
 })
 

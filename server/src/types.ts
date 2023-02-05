@@ -19,6 +19,7 @@ export type Board = {
 
 export enum ShipTile {
     EMPTY = "EMPTY",
+    EMPTY_HIT = "EMPTY_HIT",
     FULL_PRISTINE = "FULL_PRISTINE",
     FULL_HIT = "FULL_HIT"
 }
@@ -41,6 +42,8 @@ export type GameState = {
 
 export type Room = {
     id: string,
+    playerOne: any,
+    playerTwo: any,
     users: User[],
     gameState: GameState,
 }
@@ -280,4 +283,3 @@ export const initialGameState: GameState = {
     playOneHitBoard: emptyHitBoard,
     playTwoHitBoard: emptyHitBoard,
 }
-
