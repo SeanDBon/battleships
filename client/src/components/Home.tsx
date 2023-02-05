@@ -20,7 +20,7 @@ const Home = ({socket}: Props) => {
         localStorage.setItem("userName", userName)
         localStorage.setItem("room", room)
         socket.emit("joinRoom", {userName, room, isSpectating, socketID: socket.id})
-        navigate("/chat")
+        navigate("/game")
     }
     return (
         <form className='home__container' onSubmit={handleSubmit}>

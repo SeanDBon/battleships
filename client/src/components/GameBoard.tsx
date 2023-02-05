@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface Props {
     lat: number,
-    long: number
+    long: number,
+    socket: any,
 }
 
 const styles = {
@@ -17,7 +18,7 @@ const styles = {
     }
 }
 
-const Tile = ({lat, long}: Props) => {
+const Tile = ({lat, long, socket}: Props) => {
     let defaultStyle = {
         width: 100,
         height: 100,
@@ -37,6 +38,7 @@ const Tile = ({lat, long}: Props) => {
                 ...style,
                 backgroundColor: 'red'
             })
+             socket.emit("updateGame", {long, lat, attack: 'woosh'} )
         }
     }
     return (
@@ -52,9 +54,17 @@ const GameBoard = ({socket}: any) => {
     let height = 11
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
-            temp_tiles.push(<Tile lat={j} long={i} />)
+            temp_tiles.push(<Tile socket={socket} lat={j} long={i} />)
         }
     }
+
+    useEffect(()=> {
+        socket.on("gameStateChange", (data: any) => console.log(data))
+    }, [socket])
+
+    useEffect(()=> {
+        socket.on("playerAttack", (data: any) => console.log(data))
+    }, [socket])
     
     return (
         

@@ -84,6 +84,7 @@ const handleLeaveRoom = (socket, leavingUser) => {
 }
 
 const updateGame = (socket, data) => {
+    console.log(socket.roomId, data)
     let room = null
     for (let name in rooms) {
         if (rooms[name].id == socket.roomId) {
@@ -118,6 +119,7 @@ const updateBoards = (socket, room, user, data) => {
         throw new Error("Something went drastically wrong :/")
     }
 
+    console.log(shipBoard[data.lat])
     if (shipBoard[data.lat][data.long] == ShipTile.FULL_PRISTINE) {
         shipBoard[data.lat][data.long] = ShipTile.FULL_HIT
         hitBoard[data.lat][data.long] = HitTile.HIT

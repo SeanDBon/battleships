@@ -5,16 +5,16 @@ export type User = {
 }
 
 export type Board = {
-    a: {},
-    b: {},
-    c: {},
-    d: {},
-    e: {},
-    f: {},
-    g: {},
-    h: {},
-    i: {},
-    j: {},
+    1: {},
+    2: {},
+    3: {},
+    4: {},
+    5: {},
+    6: {},
+    7: {},
+    8: {},
+    9: {},
+    10: {},
 }
 
 export enum ShipTile {
@@ -49,7 +49,7 @@ export type Room = {
 }
 
 export const emptyShipBoard: Board = {
-    a: {1: ShipTile.EMPTY,
+    1: {1: ShipTile.FULL_PRISTINE,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -60,7 +60,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    b: {1: ShipTile.EMPTY,
+    2: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -71,7 +71,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    c: {1: ShipTile.EMPTY,
+    3: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -82,7 +82,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    d: {1: ShipTile.EMPTY,
+    4: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -93,7 +93,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    e: {1: ShipTile.EMPTY,
+    5: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -104,7 +104,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    f: {1: ShipTile.EMPTY,
+    6: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -115,7 +115,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    g: {1: ShipTile.EMPTY,
+    7: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -126,7 +126,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    h: {1: ShipTile.EMPTY,
+    8: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -137,7 +137,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    i: {1: ShipTile.EMPTY,
+    9: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -148,7 +148,7 @@ export const emptyShipBoard: Board = {
         9: ShipTile.EMPTY,
         10: ShipTile.EMPTY
     },
-    j: {1: ShipTile.EMPTY,
+    10: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
@@ -162,7 +162,7 @@ export const emptyShipBoard: Board = {
 }
 
 export const emptyHitBoard: Board = {
-    a: {1: HitTile.EMPTY,
+    1: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -173,7 +173,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    b: {1: HitTile.EMPTY,
+    2: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -184,7 +184,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    c: {1: HitTile.EMPTY,
+    3: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -195,7 +195,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    d: {1: HitTile.EMPTY,
+    4: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -206,7 +206,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    e: {1: HitTile.EMPTY,
+    5: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -217,7 +217,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    f: {1: HitTile.EMPTY,
+    6: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -228,7 +228,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    g: {1: HitTile.EMPTY,
+    7: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -239,7 +239,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    h: {1: HitTile.EMPTY,
+    8: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -250,7 +250,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    i: {1: HitTile.EMPTY,
+    9: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
@@ -261,7 +261,7 @@ export const emptyHitBoard: Board = {
         9: HitTile.EMPTY,
         10: HitTile.EMPTY
     },
-    j: {1: HitTile.EMPTY,
+    10: {1: HitTile.EMPTY,
         2: HitTile.EMPTY,
         3: HitTile.EMPTY,
         4: HitTile.EMPTY,
