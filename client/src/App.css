@@ -5,7 +5,6 @@
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  color: #F9F5EB;
 }
 .home__container {
   width: 100%;
@@ -15,6 +14,7 @@
   justify-content: center;
   align-items: center;
   background: #121e27;
+  color: #F9F5EB;
 }
 .home__container > * {
   margin-bottom: 10px;

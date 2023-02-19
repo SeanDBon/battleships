@@ -45,7 +45,6 @@ const Tile = ({state, tilesOnClick, tileOnDragOver, tileOnDragLeave, tileOnDrop}
         "margin":5
     }
 
-
     return(
         <div 
             style={styles} 
