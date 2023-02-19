@@ -3,7 +3,7 @@ const app = express()
 const cors = require("cors")
 const http = require("http").Server(app)
 const { v4: uuidv4 } = require("uuid")
-import { User, Room, ShipTile, HitTile, initialGameState, NewUser } from "./types"
+import { User, Room, NewUser } from "./types"
 const PORT = 4000
 const socketIO = require("socket.io")(http, {
     cors: {
@@ -30,7 +30,7 @@ const createAndJoinRoom = (roomName: string, user: User, socket: any): Room => {
         playerOne: user,
         playerTwo: null,
         spectators: [],
-        gameState: null
+        game: null
     }
     socket.roomId = room.id
     socket.join(room.id)
