@@ -8,7 +8,7 @@ interface Props {
 
 const styles = {
     tile: {
-        
+
     },
     container: {
         display: 'flex',
@@ -63,13 +63,13 @@ const GameBoard = ({socket}: any) => {
     useEffect(()=> {
         socket.on("playerAttack", (data: any) => console.log(data))
     }, [socket])
-    
+
     return (
-        
+
         <div style={styles.container}>
             {temp_tiles}
         </div>
-        
+
     )
 }
 

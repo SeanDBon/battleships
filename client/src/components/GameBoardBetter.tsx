@@ -39,18 +39,18 @@ const Tile = ({state, tilesOnClick, tileOnDragOver, tileOnDragLeave, tileOnDrop}
     }
 
     let styles = {
-        "gridColumn": state.long + 1, 
-        "gridRow": state.lat, 
+        "gridColumn": state.long + 1,
+        "gridRow": state.lat,
         "backgroundColor": backgroundColor,
         "margin":5
     }
 
     return(
-        <div 
-            style={styles} 
-            onDragOver={(e)=>tileOnDragOver(e, state.lat, state.long)} 
-            onDragLeave={(e)=>tileOnDragLeave(e, state.lat, state.long)} 
-            onDrop={(e)=>tileOnDrop(e, state.lat, state.long)} 
+        <div
+            style={styles}
+            onDragOver={(e)=>tileOnDragOver(e, state.lat, state.long)}
+            onDragLeave={(e)=>tileOnDragLeave(e, state.lat, state.long)}
+            onDrop={(e)=>tileOnDrop(e, state.lat, state.long)}
             onClick={(e)=>tilesOnClick(e, state.lat, state.long)}
         />
     )
@@ -83,7 +83,7 @@ const GameBoardBetter = () => {
         copy[long][lat].content = AttackContent.HIT
         copy[long+1][lat].content = AttackContent.HIT
         copy[long+2][lat].content = AttackContent.HIT
-        
+
         setTiles(copy)
     }
 
@@ -97,10 +97,10 @@ const GameBoardBetter = () => {
         copy[long][lat].content = AttackContent.MISS
         copy[long+1][lat].content = AttackContent.MISS
         copy[long+2][lat].content = AttackContent.MISS
-        
+
         setTiles(copy)
     }
-    
+
     const tileOnDragLeave = (e: any, lat: number, long: number) => {
         e.preventDefault()
         e.stopPropagation()
@@ -111,7 +111,7 @@ const GameBoardBetter = () => {
         copy[long][lat].content = AttackContent.EMPTY
         copy[long+1][lat].content = AttackContent.EMPTY
         copy[long+2][lat].content = AttackContent.EMPTY
-        
+
         setTiles(copy)
     }
 
@@ -121,11 +121,11 @@ const GameBoardBetter = () => {
         var copy = tiles.map(function(arr) {
             return arr.slice()
         })
-        
+
         copy[long][lat].content = AttackContent.SCANNED
         copy[long+1][lat].content = AttackContent.SCANNED
         copy[long+2][lat].content = AttackContent.SCANNED
-        
+
         setTiles(copy)
     }
 
@@ -134,9 +134,9 @@ const GameBoardBetter = () => {
             {tiles.map(
                 tileRow => tileRow.map(
                     (tile: any) => (
-                        <Tile 
-                            state={tile} 
-                            tilesOnClick={tileOnClick} 
+                        <Tile
+                            state={tile}
+                            tilesOnClick={tileOnClick}
                             tileOnDragOver={tileOnDragOver}
                             tileOnDragLeave={tileOnDragLeave}
                             tileOnDrop={tileOnDrop}
