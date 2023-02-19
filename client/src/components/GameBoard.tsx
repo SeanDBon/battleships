@@ -11,17 +11,15 @@ const styles = {
         
     },
     container: {
-        width: 1102,
         display: 'flex',
         flexFlow: "row wrap"
-
     }
 }
 
 const Tile = ({lat, long, socket}: Props) => {
     let defaultStyle = {
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         borderColor: 'black',
         borderWidth: 2,
         borderStyle: 'solid',
@@ -38,7 +36,7 @@ const Tile = ({lat, long, socket}: Props) => {
                 ...style,
                 backgroundColor: 'red'
             })
-             socket.emit("updateGame", {long, lat, attack: 'woosh'} )
+            socket.emit("updateGame", {long, lat, attack: 'woosh'} )
         }
     }
     return (
