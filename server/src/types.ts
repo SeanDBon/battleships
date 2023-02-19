@@ -1,7 +1,33 @@
 export type User = {
+    id: string,
+    username: string,
     socket: any,
-    name: string,
+}
+
+export type NewUser = {
+    username: string,
+    roomId: string,
+    roomName: string,
     isSpectating: boolean,
+}
+
+export type Room = {
+    id: string,
+    name: string,
+    playerOne: User,
+    playerTwo: User,
+    spectators: User[],
+    gameState: GameState,
+}
+
+export type GameState = {
+    playerOneReady: boolean,
+    playerTwoReady: boolean,
+    winner: string,
+    playOneShipBoard: Board,
+    playTwoShipBoard: Board,
+    playOneHitBoard: Board,
+    playTwoHitBoard: Board,
 }
 
 export type Board = {
@@ -30,26 +56,10 @@ export enum HitTile {
     MISS = "MISS"
 }
 
-export type GameState = {
-    playerOneReady: boolean,
-    playerTwoReady: boolean,
-    winner: string,
-    playOneShipBoard: Board,
-    playTwoShipBoard: Board,
-    playOneHitBoard: Board,
-    playTwoHitBoard: Board,
-}
 
-export type Room = {
-    id: string,
-    playerOne: any,
-    playerTwo: any,
-    users: User[],
-    gameState: GameState,
-}
 
 export const emptyShipBoard: Board = {
-    1: {1: ShipTile.FULL_PRISTINE,
+    1: {1: ShipTile.EMPTY,
         2: ShipTile.EMPTY,
         3: ShipTile.EMPTY,
         4: ShipTile.EMPTY,
