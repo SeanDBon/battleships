@@ -1,6 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Home from "./components/Home"
-import ChatPage from "./components/ChatPage"
 import GameBoard from "./components/GameBoard"
 import * as io from "socket.io-client"
 
@@ -11,7 +10,6 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Home socket={socket}/>}/>
-            <Route path="/chat" element={<ChatPage socket={socket}/>}/>
             <Route path="/game" element={<GameBoard socket={socket}/>}/>
           </Routes>
         </div>
