@@ -41,7 +41,7 @@ const Home = ({socket}: Props) => {
         <div className='home__container'>
             <h2 className='home__header'>Sign in to Battleships</h2>
 
-            
+
             <label htmlFor="username">Username</label>
             <input type="text"
                 minLength={4}
@@ -55,7 +55,7 @@ const Home = ({socket}: Props) => {
 
             {
             !hasClickedNext || hasClickedCreateGame || hasClickedJoinGame
-            ? (<></>) 
+            ? (<></>)
             : (<div className='room_container'>
                     <button className='home__room_button' onClick={() => {setHasClickedCreateGame(true)}}>CREATE GAME</button>
                     <button className='home__room_button' disabled={roomList.length === 0} title={roomList.length === 0 ? "No existing room": ""} onClick={() => {setHasClickedJoinGame(true)}}>JOIN GAME</button>
@@ -98,8 +98,8 @@ const Home = ({socket}: Props) => {
             }
 
             {
-            !hasClickedNext 
-            ? (<button className='home__button' disabled={!username} onClick={() => {setHasClickedNext(true)}}>NEXT</button>) 
+            !hasClickedNext
+            ? (<button className='home__button' disabled={!username} onClick={() => {setHasClickedNext(true)}}>NEXT</button>)
             : hasClickedNext && !hasClickedCreateGame && !hasClickedJoinGame ? (<></>) : (<button className='home__button' disabled={!roomId && !roomName} onClick={handleSubmit}>PLAY</button>)
             }
         </div>
