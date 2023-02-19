@@ -58,7 +58,7 @@ const Home = ({socket}: Props) => {
             ? (<></>) 
             : (<div className='room_container'>
                     <button className='home__room_button' onClick={() => {setHasClickedCreateGame(true)}}>CREATE GAME</button>
-                    <button className='home__room_button' onClick={() => {setHasClickedJoinGame(true)}}>JOIN GAME</button>
+                    <button className='home__room_button' disabled={roomList.length === 0} title={roomList.length === 0 ? "No existing room": ""} onClick={() => {setHasClickedJoinGame(true)}}>JOIN GAME</button>
                 </div>)
             }
 
@@ -100,7 +100,7 @@ const Home = ({socket}: Props) => {
             {
             !hasClickedNext 
             ? (<button className='home__button' disabled={!username} onClick={() => {setHasClickedNext(true)}}>NEXT</button>) 
-            : (<button className='home__button' disabled={!roomId && !roomName} onClick={handleSubmit}>PLAY</button>)
+            : hasClickedNext && !hasClickedCreateGame && !hasClickedJoinGame ? (<></>) : (<button className='home__button' disabled={!roomId && !roomName} onClick={handleSubmit}>PLAY</button>)
             }
         </div>
     )

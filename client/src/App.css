@@ -56,7 +56,7 @@
   justify-content: center;
   align-items: center;
   background: #121e27;
-  margin-top: 5px;
+  margin-top: 30px;
 }
 .home__room_button {
   width: 250px;
@@ -92,5 +92,5 @@
 }
 *:disabled {
   background: grey;
-  pointer-events: none;
+  pointer-events: auto;
 }
