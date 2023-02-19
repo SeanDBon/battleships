@@ -17,7 +17,7 @@ const Home = ({socket}: Props) => {
     const [hasClickedCreateGame, setHasClickedCreateGame] = useState(false)
 
     useEffect(() => {
-        fetchRoomList();
+        fetchRoomList()
     },[])
 
     const fetchRoomList = async () => {

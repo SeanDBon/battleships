@@ -1,0 +1,81 @@
+.headerLeft {
+    grid-area: hdl;
+}
+
+.headerRight {
+    grid-area: hdr;
+}
+
+.rightbar {
+    grid-area: rb;
+}
+
+.gameContainer {
+    grid-area: gc;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: [first] auto [line2] 25%;
+    grid-template-rows: [row1-start] 5% [row1-end] auto [last-line];
+    grid-template-areas:
+    "hdl hdr"
+    "gc rb";
+    height: 100vh;
+}
+
+.gameHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin: 0px 15px 0px 15px
+}
+
+.divider {
+    height: 2px;
+    background-color: gray;
+}
+
+.vertDivider {
+    height: 100%;
+    width: 2px;
+    background-color: gray;
+}
+
+.gameSettings {
+    justify-content: flex-end;
+    gap: 10%;
+}
+
+.gameBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    border-left: 2px gray solid;
+}
+
+.boat {
+    width: 80%;
+    min-height: 10%;
+    border: 2px;
+    border-color: gray;
+    border-style: solid;
+}
+
+.basket {
+    width: 100%;
+    height: 100%;
+}
+
+.gameBoard {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, auto);
+    height: 80%;
+    width: 80%;
+}
