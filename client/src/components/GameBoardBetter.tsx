@@ -1,49 +1,77 @@
 import React, { useState } from "react"
-import { useDrop } from 'react-dnd'
 
 interface Props {
     lat: number,
     long: number,
 }
 
-const Tile = ({lat, long}: Props) => {
-    let styles = {
-        "gridColumn": long, 
-        "gridRow": lat, 
-        "backgroundColor":"black",
-        "margin":5
-    }
-
-    const [{ isOver }, dropRef] = useDrop({
-        accept: 'boat',
-        collect: (monitor) => ({
-            isOver: monitor.isOver()
-        }),
-        hover(item, monitor) {
-            console.log(lat, long)
-        }
-    })
-
-    return(
-        <div style={styles} ref={dropRef}></div>
-    )
+type AttackTile = {
+    content: "empty" | "hit" | "miss" | "scanned"
+}
+type DefenceTile = {
+    content: "empty" | "boat"  | "boatHit",
 }
 
-const generateGrid = () => {
-    let temp_tiles = []
-    for (let i = 1; i <= 11; i++) {
-        for (let j = 1; j <= 11; j++) {
-            temp_tiles.push(<Tile lat={j} long={i} />)
-        }
-    }
-    return temp_tiles
+const onDragOver = (e:any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.target.style.background = 'red'
+}
+const onDragLeave = (e:any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.target.style.background = 'black';
+}
+const onDrop = (e:any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.target.style.background = 'yellow'
 }
 
 const GameBoardBetter = () => {
+    const Tile = ({lat, long}: Props) => {
+        let styles = {
+            "gridColumn": long+1, 
+            "gridRow": lat, 
+            "backgroundColor":"black",
+            "margin":5
+        }
+    
+        return(
+            <div 
+                style={styles} 
+                onDragOver={(e)=>onDragOver(e)} 
+                onDragLeave={(e)=>onDragLeave(e)} 
+                onDrop={(e)=>onDrop(e)} 
+                onClick={(e)=>onClick(e, lat, long)}
+            />
+        )
+    }
+
+    const generateGrid = () => {
+        let temp_tiles : any[]= []
+        for (let i = 0; i <= 10; i++) {
+            temp_tiles.push([])
+            for (let j = 0; j <= 10; j++) {
+                temp_tiles[i].push(<Tile lat={j} long={i} />)
+            }
+        }
+        return temp_tiles
+    }
+
+    const [tiles, setTiles] = useState(generateGrid())
+
+    const onClick = (e:any, lat:number, long:number) => {
+        
+        let currentTile = tiles[lat][long]
+
+        console.log(currentTile)
+    }
+
     return (
-            <div className='gameBoard'>
-                {generateGrid()}
-            </div>
+        <div className='gameBoard'>
+            {tiles}
+        </div>
     )
 }
 
