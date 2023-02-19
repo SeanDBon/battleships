@@ -27,7 +27,7 @@ type DefenceTile = {
 
 
 const Tile = ({state, tilesOnClick, tileOnDragOver, tileOnDragLeave, tileOnDrop}: any) => {
-    let backgroundColor;
+    let backgroundColor
     if (state.content === AttackContent.EMPTY) {
         backgroundColor = 'black'
     } else if (state.content === AttackContent.MISS) {
@@ -77,8 +77,8 @@ const GameBoardBetter = () => {
 
     const tileOnClick = (e: any, lat: number, long: number) => {
         var copy = tiles.map(function(arr) {
-            return arr.slice();
-        });
+            return arr.slice()
+        })
 
         copy[long][lat].content = AttackContent.HIT
         copy[long+1][lat].content = AttackContent.HIT
@@ -88,11 +88,11 @@ const GameBoardBetter = () => {
     }
 
     const tileOnDragOver = (e: any, lat: number, long: number) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault()
+        e.stopPropagation()
         var copy = tiles.map(function(arr) {
-            return arr.slice();
-        });
+            return arr.slice()
+        })
 
         copy[long][lat].content = AttackContent.MISS
         copy[long+1][lat].content = AttackContent.MISS
@@ -102,11 +102,11 @@ const GameBoardBetter = () => {
     }
     
     const tileOnDragLeave = (e: any, lat: number, long: number) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault()
+        e.stopPropagation()
         var copy = tiles.map(function(arr) {
-            return arr.slice();
-        });
+            return arr.slice()
+        })
 
         copy[long][lat].content = AttackContent.EMPTY
         copy[long+1][lat].content = AttackContent.EMPTY
@@ -116,11 +116,11 @@ const GameBoardBetter = () => {
     }
 
     const tileOnDrop = (e: any, lat: number, long: number) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault()
+        e.stopPropagation()
         var copy = tiles.map(function(arr) {
-            return arr.slice();
-        });
+            return arr.slice()
+        })
         
         copy[long][lat].content = AttackContent.SCANNED
         copy[long+1][lat].content = AttackContent.SCANNED
