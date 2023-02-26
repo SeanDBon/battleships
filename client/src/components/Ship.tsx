@@ -17,6 +17,7 @@ const Ship = ({ship, rotateShip}: any) => {
         backgroundColor,
         left,
         top,
+        opacity: isMoving? 0.33 : 1
     }
 
     const handleMouseDown = (e: any) => {
@@ -39,6 +40,8 @@ const Ship = ({ship, rotateShip}: any) => {
 
         setLeft(e.clientX - offsetX)
         setTop(e.clientY - offsetY)
+        let boat = e.target
+        //console.log(boat.getBoundingClientRect())
     }
 
     const handleKeyPress = (e: any) => {
@@ -46,7 +49,6 @@ const Ship = ({ship, rotateShip}: any) => {
 
         rotateShip(ship.name)
     }
-
 
     return(
         <div
@@ -58,7 +60,7 @@ const Ship = ({ship, rotateShip}: any) => {
             style={style}
             tabIndex={0}
             className='ship'>
-                {ship.name}
+
         </div>
     )
 }

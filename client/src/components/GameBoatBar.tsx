@@ -63,7 +63,7 @@ const GameBoatBar = () => {
         setShips((prev: any) => ({
             ...prev,
             shipName: current
-           }))
+        }))
     }
 
     return(
