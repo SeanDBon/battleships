@@ -31,7 +31,7 @@ const getShips = () => {
         let current = {
             name: i.toString(),
             isDestroyed: false,
-            length: 2,
+            length: 3,
             direction: 0,
             part1: {
                 posX: -1,
@@ -49,7 +49,7 @@ const getShips = () => {
     return ships
 }
 
-const GameBoatBar = () => {
+const GameBoatBar = ({setSelectedShip}: any) => {
     const [ships, setShips] = useState(getShips())
 
     const rotateShip = (shipName: string) => {
@@ -68,11 +68,11 @@ const GameBoatBar = () => {
 
     return(
         <div className="gameBar">
-            <Ship ship={ships[0]} rotateShip={rotateShip}/>
-            <Ship ship={ships[1]} rotateShip={rotateShip}/>
-            <Ship ship={ships[2]} rotateShip={rotateShip}/>
-            <Ship ship={ships[3]} rotateShip={rotateShip}/>
-            <Ship ship={ships[4]} rotateShip={rotateShip}/>
+            <Ship ship={ships[0]} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships[1]} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships[2]} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships[3]} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships[4]} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
         </div>
     )
 }
