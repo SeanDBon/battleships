@@ -13,7 +13,7 @@ const Game = ({socket}: any) => {
             <div className="headerLeft"><GameHeader/></div>
             <div className="headerRight"><GameSettings/></div>
             <div className="gameContainer"><GameBoard setSelectedShip={setSelectedShip} selectedShip={selectedShip}/></div>
-            <div className="rightbar"><GameBoatBar setSelectedShip={setSelectedShip}/></div>
+            <div className="rightbar"><GameBoatBar selectedShip={selectedShip} setSelectedShip={setSelectedShip}/></div>
         </div>
     )
 }
