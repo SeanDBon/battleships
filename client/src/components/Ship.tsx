@@ -8,7 +8,8 @@ const Ship = ({ship, rotateShip}: any) => {
     const [offsetY, setOffsetY] = useState(0)
     const [backgroundColor, setBackgroundColor] = useState('black')
 
-    const direction = 'rotate(' + ship.direction * 90 +  'deg)';
+    // This is perfect in every way.
+    const direction = 'rotate(' + ship.direction * 90 +  'deg)'
 
     const style = {
         position: 'relative' as 'relative',

@@ -58,8 +58,8 @@ const joinRoom = (roomId: string, isSpectating: boolean, user: User, socket: any
 
 socketIO.on("connection", (socket: any) => {
     socket.on("start", (newUser: NewUser) => {
-        const user: User = createUser(newUser.username, socket);
-        let room: Room;
+        const user: User = createUser(newUser.username, socket)
+        let room: Room
         if (newUser?.roomId) {
             room = joinRoom(newUser.roomId, newUser.isSpectating, user, socket)
         } else {
