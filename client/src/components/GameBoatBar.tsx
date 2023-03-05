@@ -25,54 +25,56 @@ enum Attack {
     TORPEDO = "TORPEDO",
 }
 
-const getShips = () => {
-    const ships: any = {}
-    for (let i = 0; i < 5; i++) {
-        let current = {
-            name: i.toString(),
-            isDestroyed: false,
-            length: 2,
-            direction: 0,
-            part1: {
-                posX: -1,
-                posY: -1,
-                isHit: false
-            },
-            part2: {
-                posX: -1,
-                posY: -1,
-                isHit: false
-            }
-        }
-        ships[current.name] = current
+
+const defaultShips: any = {
+    "cruiser": {
+        quantity: 4,
+        length: 2,
+        isDestroyed: false,
+        direction: 0,
+    },
+    "frigate":{
+        quantity: 3,
+        length: 3,
+        isDestroyed: false,
+        direction: 0,
+    },
+    "destroyer":{
+        quantity: 2,
+        length: 4,
+        isDestroyed: false,
+        direction: 0,
+    },
+    "carrier":{
+        quantity: 1,
+        length: 5,
+        isDestroyed: false,
+        direction: 0,
     }
-    return ships
 }
 
-const GameBoatBar = () => {
-    const [ships, setShips] = useState(getShips())
+const GameBoatBar = ({selectedShip, setSelectedShip}: any) => {
+    const [ships, setShips] = useState(defaultShips)
 
-    const rotateShip = (shipName: string) => {
-        let current = ships[shipName]
-        if (current.direction === 3) {
-            current.direction = 0
+    const rotateShip = () => {
+        if (selectedShip.direction === 3) {
+            selectedShip.direction = 0
         } else {
-            current.direction++
+            selectedShip.direction++
         }
 
         setShips((prev: any) => ({
             ...prev,
-            shipName: current
-           }))
+            selectedShip
+        }))
     }
 
     return(
         <div className="gameBar">
-            <Ship ship={ships[0]} rotateShip={rotateShip}/>
-            <Ship ship={ships[1]} rotateShip={rotateShip}/>
-            <Ship ship={ships[2]} rotateShip={rotateShip}/>
-            <Ship ship={ships[3]} rotateShip={rotateShip}/>
-            <Ship ship={ships[4]} rotateShip={rotateShip}/>
+            <Ship ship={ships.cruiser} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships.frigate} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships.destroyer} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
+            <Ship ship={ships.carrier} rotateShip={rotateShip} setSelectedShip={setSelectedShip}/>
         </div>
     )
 }

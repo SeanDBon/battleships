@@ -60,8 +60,8 @@
 }
 
 .ship {
-    width: 80%;
-    min-height: 10%;
+    width: 60%;
+    min-height: 6%;
     border: 2px;
     border-color: gray;
     border-style: solid;

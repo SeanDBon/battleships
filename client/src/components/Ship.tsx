@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Ship = ({ship, rotateShip}: any) => {
+const Ship = ({ship, rotateShip, setSelectedShip}: any) => {
     const [isMoving, setIsMoving] = useState(false)
     const [left, setLeft] = useState(0)
     const [top, setTop] = useState(0)
@@ -17,10 +17,12 @@ const Ship = ({ship, rotateShip}: any) => {
         backgroundColor,
         left,
         top,
+        opacity: isMoving? 0.33 : 1
     }
 
     const handleMouseDown = (e: any) => {
         setIsMoving(true)
+        setSelectedShip(ship)
         setOffsetX(e.clientX - offsetX)
         setOffsetY(e.clientY - offsetY)
         setBackgroundColor('green')
@@ -28,6 +30,7 @@ const Ship = ({ship, rotateShip}: any) => {
 
     const handleMouseUp = (e: any) => {
         if (!isMoving) return
+
         setIsMoving(false)
         setOffsetX(e.clientX - offsetX)
         setOffsetY(e.clientY - offsetY)
@@ -47,7 +50,6 @@ const Ship = ({ship, rotateShip}: any) => {
         rotateShip(ship.name)
     }
 
-
     return(
         <div
             onMouseDown={(e) => handleMouseDown(e)}
@@ -58,7 +60,7 @@ const Ship = ({ship, rotateShip}: any) => {
             style={style}
             tabIndex={0}
             className='ship'>
-                {ship.name}
+
         </div>
     )
 }

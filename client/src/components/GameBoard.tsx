@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useRef } from "react"
+import { useEffect, useState } from "react"
 
 enum AttackContent {
     EMPTY = "EMPTY",
@@ -16,7 +17,8 @@ enum DefenderContent {
 type AttackTile = {
     content: AttackContent,
     lat: number,
-    long: number
+    long: number,
+    boundingBox: DOMRect | null
 }
 
 type DefenceTile = {
@@ -26,7 +28,9 @@ type DefenceTile = {
 }
 
 
-const Tile = ({state, tilesOnClick, tileOnDragOver, tileOnDragLeave, tileOnDrop}: any) => {
+const Tile = ({state, setBoundingBox, selectedShip}: any) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
     let backgroundColor
     if (state.content === AttackContent.EMPTY) {
         backgroundColor = 'black'
@@ -41,18 +45,18 @@ const Tile = ({state, tilesOnClick, tileOnDragOver, tileOnDragLeave, tileOnDrop}
     let styles = {
         "gridColumn": state.long + 1,
         "gridRow": state.lat,
-        "backgroundColor": backgroundColor,
-        "margin":5
+        "margin": 5,
+        backgroundColor
     }
+
+    useEffect(() => {
+        setBoundingBox(state.lat, state.long, inputRef.current?.getBoundingClientRect())
+    }, []);
 
     return(
         <div
+            ref={inputRef}
             style={styles}
-            onDragOver={(e)=>tileOnDragOver(e, state.lat, state.long)}
-            onDragLeave={(e)=>tileOnDragLeave(e, state.lat, state.long)}
-            onDrop={(e)=>tileOnDrop(e, state.lat, state.long)}
-            onMouseEnter={() => console.log('asdfasdf')}
-            onClick={(e)=>tilesOnClick(e, state.lat, state.long)}
         />
     )
 }
@@ -65,7 +69,8 @@ const generateAttackerTiles = () => {
             const initialTile: AttackTile = {
                 content: AttackContent.EMPTY,
                 lat: j,
-                long: i
+                long: i,
+                boundingBox: null
             }
             attackerTiles[i].push(initialTile)
         }
@@ -73,61 +78,60 @@ const generateAttackerTiles = () => {
     return attackerTiles
 }
 
-const GameBoard = () => {
+const GameBoard = ({selectedShip, setSelectedShip}: any) => {
     const [tiles, setTiles] = useState<any[]>(generateAttackerTiles())
 
-    const tileOnClick = (e: any, lat: number, long: number) => {
+    const placeShip = (lat: number, long: number, type: string) => {
         var copy = tiles.map(function(arr) {
             return arr.slice()
         })
+        let content
+        if (type==="mouseup"){
+            content = AttackContent.MISS
+        } else if (type==="mousemove") {
+            console.log("Anything")
+            content = AttackContent.SCANNED
+        }
 
-        copy[long][lat].content = AttackContent.HIT
-        copy[long+1][lat].content = AttackContent.HIT
-        copy[long+2][lat].content = AttackContent.HIT
-
+        if (selectedShip.direction % 2 === 0) {
+            for (let i = 0; i < selectedShip.length; i++) {
+                copy[lat + i][long].content = content
+            }
+        } else {
+            for (let i = 0; i < selectedShip.length; i++) {
+                copy[lat][long + i].content = content
+            }
+        }
         setTiles(copy)
     }
 
-    const tileOnDragOver = (e: any, lat: number, long: number) => {
-        console.log('a')
-        e.preventDefault()
-        e.stopPropagation()
-        var copy = tiles.map(function(arr) {
-            return arr.slice()
-        })
-
-        copy[long][lat].content = AttackContent.MISS
-        copy[long+1][lat].content = AttackContent.MISS
-        copy[long+2][lat].content = AttackContent.MISS
-
-        setTiles(copy)
+    const checkCollision = (e: MouseEvent) => {
+        for (let i = 0; i <= 10; i++) {
+            for (let j = 0; j <= 10; j++) {
+                let inX = tiles[i][j].boundingBox.x < e.clientX && e.clientX < tiles[i][j].boundingBox.x + tiles[i][j].boundingBox.width
+                let inY = tiles[i][j].boundingBox.y < e.clientY && e.clientY < tiles[i][j].boundingBox.y + tiles[i][j].boundingBox.height
+                if (inX && inY && selectedShip) {
+                    placeShip(i, j, e.type)
+                }
+            }
+        }
+        setSelectedShip(null)
     }
 
-    const tileOnDragLeave = (e: any, lat: number, long: number) => {
-        e.preventDefault()
-        e.stopPropagation()
+    useEffect(() => {
+        window.addEventListener("mouseup", checkCollision)
+        window.addEventListener("mousemove", checkCollision)
+        return () => {
+            window.removeEventListener('mouseup', checkCollision)
+            window.removeEventListener("mousemove", checkCollision)
+        };
+    }, [selectedShip]);
+
+    const setBoundingBox = (lat: number, long: number, rect: DOMRect) => {
         var copy = tiles.map(function(arr) {
             return arr.slice()
         })
-
-        copy[long][lat].content = AttackContent.EMPTY
-        copy[long+1][lat].content = AttackContent.EMPTY
-        copy[long+2][lat].content = AttackContent.EMPTY
-
-        setTiles(copy)
-    }
-
-    const tileOnDrop = (e: any, lat: number, long: number) => {
-        e.preventDefault()
-        e.stopPropagation()
-        var copy = tiles.map(function(arr) {
-            return arr.slice()
-        })
-
-        copy[long][lat].content = AttackContent.SCANNED
-        copy[long+1][lat].content = AttackContent.SCANNED
-        copy[long+2][lat].content = AttackContent.SCANNED
-
+        copy[long][lat].boundingBox = rect
         setTiles(copy)
     }
 
@@ -138,10 +142,7 @@ const GameBoard = () => {
                     (tile: any) => (
                         <Tile
                             state={tile}
-                            tilesOnClick={tileOnClick}
-                            tileOnDragOver={tileOnDragOver}
-                            tileOnDragLeave={tileOnDragLeave}
-                            tileOnDrop={tileOnDrop}
+                            setBoundingBox = {setBoundingBox}
                         />
                     )
                 )
